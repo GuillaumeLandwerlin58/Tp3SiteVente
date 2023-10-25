@@ -2,6 +2,7 @@ import { BreadCrumbs, SectionContainer } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { ProductList } from "../components/product-list";
 import { Metadata } from "next";
+import {getCategories} from "../utils/database";
 import prisma from "../utils/prisma";
 
 export const metadata:Metadata = {
@@ -9,9 +10,9 @@ export const metadata:Metadata = {
   description: "Commandez de délicieuses boissons préparées avec soin par nos baristas"
 }
 
-const categories = await prisma.productCategory.findMany({ include: { products: true } });
 
 export default async function Home() {
+    const categories = await getCategories();
   return (<SectionContainer>
     <BreadCrumbs items={[
       {
